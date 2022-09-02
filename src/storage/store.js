@@ -93,6 +93,10 @@ export const SCHEMA = {
         hasScaled: { type: "boolean" },
         hasHoveredInWorldHud: { type: "boolean" },
         hasOpenedShare: { type: "boolean" },
+
+        hasOpenedProduct: {type: "boolean" },
+        hasOpenedArt: {type: "boolean" },
+        
         entryCount: { type: "number" }
       }
     },

@@ -11,6 +11,7 @@ AFRAME.registerComponent("in-world-hud", {
     this.pen = this.el.querySelector(".penhud");
     this.cameraBtn = this.el.querySelector(".camera-btn");
     this.inviteBtn = this.el.querySelector(".invite-btn");
+    this.productBtn = this.el.querySelector(".product-btn");
     this.background = this.el.querySelector(".bg");
 
     this.onMicStateChanged = () => {
@@ -75,6 +76,7 @@ AFRAME.registerComponent("in-world-hud", {
     this.pen.object3D.addEventListener("interact", this.onPenClick);
     this.cameraBtn.object3D.addEventListener("interact", this.onCameraClick);
     this.inviteBtn.object3D.addEventListener("interact", this.onInviteClick);
+    this.productBtn.object3D.addEventListener("interact", this.onProductClick);
   },
 
   pause() {
@@ -88,5 +90,6 @@ AFRAME.registerComponent("in-world-hud", {
     this.pen.object3D.removeEventListener("interact", this.onPenClick);
     this.cameraBtn.object3D.removeEventListener("interact", this.onCameraClick);
     this.inviteBtn.object3D.removeEventListener("interact", this.onInviteClick);
+    this.productBtn.object3D.removeEventListener("interact", this.onProductClick);
   }
 });

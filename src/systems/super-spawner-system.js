@@ -1,5 +1,6 @@
 import { addMedia } from "../utils/media-utils";
 import { ObjectContentOrigins } from "../object-types";
+import { triggeredFunctions } from "../triggeredFunctions";
 import { Held, HeldHandLeft, HeldHandRight, HeldRemoteLeft, HeldRemoteRight } from "../bit-components";
 import { addComponent } from "bitecs";
 
@@ -15,14 +16,94 @@ export class SuperSpawnerSystem {
         ? window.APP.hubChannel.can("spawn_emoji")
         : window.APP.hubChannel.can("spawn_and_move_media"));
 
+    let isScriptTrigger = false;
+    if(superSpawner)
+    {
+      if(state.hovered.object3D.name.indexOf('script') !== -1)
+      {
+        isScriptTrigger = true;
+      }
+    }
+
     if (
       superSpawner &&
       superSpawner.spawnedMediaScale &&
       !superSpawner.cooldownTimeout &&
       userinput.get(grabPath) &&
-      isPermitted
+      isPermitted &&
+      !isScriptTrigger
     ) {
       this.performSpawn(state, superSpawner, HeldComponent);
+    }    
+    else if(
+      superSpawner &&
+      superSpawner.spawnedMediaScale &&
+      !superSpawner.cooldownTimeout &&
+      userinput.get(grabPath) &&
+      isPermitted &&
+      isScriptTrigger
+    ){
+      // trigger function
+      if(state.hovered.object3D.name.indexOf('hacaro_black') !== -1)
+      {
+        triggeredFunctions.hacaroBlackClick();
+      }
+      else if(state.hovered.object3D.name.indexOf('hacaro_blue') !== -1)
+      {
+        triggeredFunctions.hacaroBlueClick();
+      }
+      else if(state.hovered.object3D.name.indexOf('hacaro_pink') !== -1)
+      {
+        triggeredFunctions.hacaroPinkClick();
+      }
+      else if(state.hovered.object3D.name.indexOf('guide') !== -1)
+      {
+        triggeredFunctions.guideClick();
+      }
+      else if(state.hovered.object3D.name.indexOf('sick') !== -1)
+      {
+        triggeredFunctions.sickArtClick();
+      }
+      else if(state.hovered.object3D.name.indexOf('boucher') !== -1)
+      {
+        triggeredFunctions.boucherArtClick();
+      }
+      else if(state.hovered.object3D.name.indexOf('bunel') !== -1)
+      {
+        triggeredFunctions.bunelArtClick();
+      }
+      else if(state.hovered.object3D.name.indexOf('cezanne') !== -1)
+      {
+        triggeredFunctions.cezanneArtClick();
+      }
+      else if(state.hovered.object3D.name.indexOf('chalon') !== -1)
+      {
+        triggeredFunctions.chalonArtClick();
+      }
+      else if(state.hovered.object3D.name.indexOf('gerard') !== -1)
+      {
+        triggeredFunctions.gerardArtClick();
+      }
+      else if(state.hovered.object3D.name.indexOf('modigliani') !== -1)
+      {
+        triggeredFunctions.modiglianiArtClick();
+      }
+      else if(state.hovered.object3D.name.indexOf('monet') !== -1)
+      {
+        triggeredFunctions.monetArtClick();
+      }
+      else if(state.hovered.object3D.name.indexOf('redoute') !== -1)
+      {
+        triggeredFunctions.redouteArtClick();
+      }
+      else if(state.hovered.object3D.name.indexOf('tokutei_1') !== -1)
+      {
+        triggeredFunctions.tokutei1Click();
+      }
+      else if(state.hovered.object3D.name.indexOf('canDo') !== -1)
+      {
+        triggeredFunctions.canDoClick();
+      }
     }
   }
 

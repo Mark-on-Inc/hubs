@@ -2,6 +2,7 @@ import React, { Component, useEffect } from "react";
 import PropTypes from "prop-types";
 import classNames from "classnames";
 import copy from "copy-to-clipboard";
+
 import { FormattedMessage } from "react-intl";
 import screenfull from "screenfull";
 
@@ -9,6 +10,12 @@ import configs from "../utils/configs";
 import { VR_DEVICE_AVAILABILITY } from "../utils/vr-caps-detect";
 import { canShare } from "../utils/share";
 import styles from "../assets/stylesheets/ui-root.scss";
+
+import productStyles from "../assets/stylesheets/product-dialog.scss";
+import artStyles from  "../assets/stylesheets/art-dialog.scss";
+import ProductDialog from "./product-dialog.js";
+import ArtDialog from "./art-dialog.js";
+
 import styleUtils from "./styles/style-utils.scss";
 import { ReactAudioContext } from "./wrap-with-audio";
 import {
@@ -112,7 +119,7 @@ async function grantedMicLabels() {
 
 const isMobile = AFRAME.utils.device.isMobile();
 const isMobileVR = AFRAME.utils.device.isMobileVR();
-const AUTO_EXIT_TIMER_SECONDS = 10;
+const AUTO_EXIT_TIMER_SECONDS = 300; //10;
 
 class UIRoot extends Component {
   willCompileAndUploadMaterials = false;
@@ -197,7 +204,18 @@ class UIRoot extends Component {
     objectSrc: "",
     sidebarId: null,
     presenceCount: 0,
-    chatInputEffect: () => {}
+    chatInputEffect: () => {},
+
+
+    isPresenceListExpanded: false,
+
+    productName: '',
+    productId: '',
+    productInfo: '',
+    productGenre: '',
+    productPrice: '',
+    productStatus: '',
+    productScriptSrc: ''
   };
 
   constructor(props) {
@@ -281,6 +299,8 @@ class UIRoot extends Component {
   };
 
   onIdleDetected = () => {
+    return; // dont make idele detecter work
+
     if (
       this.props.disableAutoExitOnIdle ||
       this.state.isStreaming ||
@@ -637,6 +657,52 @@ class UIRoot extends Component {
     this.props.store.update({ activity: { hasOpenedShare: true } });
     this.setState({ showShareDialog: !this.state.showShareDialog });
   };
+
+  showProductDialog = () => {
+    this.props.store.update({ activity: { hasOpenedProduct: true } });
+    this.setState({ showProductDialog: true });
+  };
+
+  showArtDialog = () => {
+    this.props.store.update({ activity: { hasOpenedArt: true } });
+    this.setState({ showArtDialog: true });
+  };
+
+  toggleProductDialog = async() => {
+    this.props.store.update({ activity: {hasOpenedProduct: true } });
+
+    const proId = localStorage.getItem('product-id');
+    const proName = localStorage.getItem( 'product-name');
+    const proInfo = localStorage.getItem( 'product-info');
+    const proGenre = localStorage.getItem( 'product-genre');
+    const proPrice = localStorage.getItem( 'product-price');
+    const proPic = localStorage.getItem( 'product-pic');
+    const proStatus = localStorage.getItem( 'product-status');
+    const proScriptSrc = localStorage.getItem('product-script-src');
+
+    this.setState({ productName: proName});
+    this.setState({ productId: proId});
+    this.setState({ productInfo: proInfo});
+    this.setState({ productGenre: proGenre });
+    this.setState({ productPrice: proPrice });
+    this.setState({ productStatus: proStatus });
+    this.setState({ showProductDialog: !this.state.showProductDialog });
+    this.setState({ productScriptSrc: proScriptSrc });
+  }
+
+  toggleArtDialog = async() => {
+    this.props.store.update({ activity: {hasOpenedArt: true } });
+
+    const aName = localStorage.getItem( 'art-name');
+    const aInfo = localStorage.getItem( 'art-info');
+    const aPic = localStorage.getItem( 'art-pic');
+
+    this.setState({ artName: aName});
+    this.setState({ artInfo: aInfo});
+    this.setState({ artPic: aPic });
+    this.setState({ showArtDialog: !this.state.showArtDialog });
+  }
+
 
   closeDialog = () => {
     if (this.state.dialog) {

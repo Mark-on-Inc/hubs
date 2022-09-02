@@ -225,7 +225,7 @@ const Banner = () => {
           {/* BRANDING  */}
           <div className={styles.branding_container}>
             <h2>
-              <FormattedMessage defaultMessage="Join the next evolution of Hubs!" id="banner.title" />
+              <FormattedMessage defaultMessage="aiueo Join the next evolution of Hubs!" id="banner.title" />
             </h2>
             <p>
               <FormattedMessage defaultMessage="Be the first to get a sneak peek!" id="banner.subtitle" />
